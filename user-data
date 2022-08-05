@@ -30,7 +30,11 @@ docker run -d -p 9000:9000 -p 9001:9001 --name portainer_agent --restart=always 
 mkdir -p $NGINX_DIR
 mkdir -p $NGINX_DIR/config
 touch $NGINX_DIR/config/max_body.conf
+<<<<<<< HEAD
 echo "client_max_body_size "$CLIENT_MAX_BODY_SIZE"m;" >> $NGINX_DIR/config/max_body.conf
+=======
+echo "client_max_body_size 200m;" >> $NGINX_DIR/config/max_body.conf
+>>>>>>> 6647829ee6dbdced13558a66637e5bef5a823ba8
 curl $REMOTE_RESOURCES/nginx-proxy-le.yml -o $NGINX_DIR/docker-compose.yml
 docker network create nginx-proxy
 docker-compose -f $NGINX_DIR/docker-compose.yml up -d

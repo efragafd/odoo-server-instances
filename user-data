@@ -4,7 +4,6 @@ INSTANCE='leyfra-test'
 DOMAIN='test.leyfra.com'
 ODOO_VERSION='14.0'
 POSTGRES_VERSION='13.0'
-CLIENT_MAX_BODY_SIZE ='200'
 
 DOCKERS_DIR='/root/dockers'
 
@@ -29,8 +28,8 @@ docker run -d -p 9000:9000 -p 9001:9001 --name portainer_agent --restart=always 
 
 mkdir -p $NGINX_DIR
 mkdir -p $NGINX_DIR/config
-touch $NGINX_DIR/config/max_body.conf
-echo "client_max_body_size "$CLIENT_MAX_BODY_SIZE"m;" >> $NGINX_DIR/config/max_body.conf
+touch $NGINX_DIR/config/client_max_body_size.conf
+echo "client_max_body_size 200m;" >> $NGINX_DIR/config/client_max_body_size.conf
 curl $REMOTE_RESOURCES/nginx-proxy-le.yml -o $NGINX_DIR/docker-compose.yml
 docker network create nginx-proxy
 docker-compose -f $NGINX_DIR/docker-compose.yml up -d

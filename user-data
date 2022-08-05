@@ -4,13 +4,14 @@ INSTANCE='leyfra-test'
 DOMAIN='test.leyfra.com'
 ODOO_VERSION='14.0'
 POSTGRES_VERSION='13.0'
+CLIENT_MAX_BODY_SIZE ='200'
 
 DOCKERS_DIR='/root/dockers'
 
-REPO_URL='https://github.com/efragafd/odoo-server'
+REPO_URL='https://raw.githubusercontent.com/efragafd/odoo-server-instances'
 REPO_BRANCH='master'
 
-REMOTE_RESOURCES=$REPO_URL/tree/$REPO_BRANCH
+REMOTE_RESOURCES=$REPO_URL/$REPO_BRANCH
 NGINX_DIR=$DOCKERS_DIR/nginx
 INSTANCE_DIR=$DOCKERS_DIR/$INSTANCE
 
@@ -24,9 +25,12 @@ apt install -y \
 systemctl enable docker
 systemctl start docker
 
-docker run -d -p 9001:9001 --name portainer_agent --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/volumes:/var/lib/docker/volumes portainer/agent
+docker run -d -p 9000:9000 -p 9001:9001 --name portainer_agent --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/volumes:/var/lib/docker/volumes portainer/agent
 
 mkdir -p $NGINX_DIR
+mkdir -p $NGINX_DIR/config
+touch $NGINX_DIR/config/max_body.conf
+echo "client_max_body_size "$CLIENT_MAX_BODY_SIZE"m;" >> $NGINX_DIR/config/max_body.conf
 curl $REMOTE_RESOURCES/nginx-proxy-le.yml -o $NGINX_DIR/docker-compose.yml
 docker network create nginx-proxy
 docker-compose -f $NGINX_DIR/docker-compose.yml up -d

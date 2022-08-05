@@ -10,6 +10,7 @@ services:
       - "443:443"
     volumes:
       - conf:/etc/nginx/conf.d
+      - ./config/max_body.conf:/etc/nginx/conf.d/max_body.conf:ro
       - vhost:/etc/nginx/vhost.d
       - html:/usr/share/nginx/html
       - certs:/etc/nginx/certs:ro

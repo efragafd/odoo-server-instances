@@ -16,7 +16,7 @@ services:
     environment:
       - VIRTUAL_HOST=${DOMAIN},www.${DOMAIN},farma.${DOMAIN},test.${DOMAIN},seasons.${DOMAIN}
       - VIRTUAL_PORT=8069
-      - LETSENCRYPT_HOST=${DOMAIN},www.${DOMAIN},test.${DOMAIN},seasons.${DOMAIN}
+      - LETSENCRYPT_HOST=${DOMAIN},www.${DOMAIN},farma.${DOMAIN},test.${DOMAIN},seasons.${DOMAIN}
       - LETSENCRYPT_EMAIL=${CONTACT}
     networks:
       - nginx-proxy
